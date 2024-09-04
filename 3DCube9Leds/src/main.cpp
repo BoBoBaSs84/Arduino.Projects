@@ -5,7 +5,7 @@ const uint8_t numGrounds = sizeof(groundPins) / sizeof(groundPins[0]);
 const uint8_t ledPins[] = {2, 3, 4, 7, 6, 5, 10, 9, 8};
 const uint8_t numLeds = sizeof(ledPins) / sizeof(ledPins[0]);
 
-void SelfTest();
+void SelfTest(int delayTime);
 void Rotate();
 
 void setup()
@@ -26,16 +26,18 @@ void setup()
   for (uint8_t i = 0; i < numLeds; i++)
     pinMode(ledPins[i], 0x1);
 
-  SelfTest();
+  SelfTest(50);
 }
 
 void loop()
 {
+  SelfTest(100);
+  SelfTest(50);
 }
 
-void SelfTest()
+void SelfTest(int delayTime)
 {
-  uint8_t delayTime = 100;
+
   Serial.println("Starting self test...");
   for (uint8_t i = 0; i < numGrounds; i++)
   {
@@ -57,5 +59,4 @@ void SelfTest()
 
 void Rotate()
 {
-
 }
