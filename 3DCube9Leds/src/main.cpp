@@ -36,23 +36,26 @@ void loop()
 
 void SelfTest(int delayTime)
 {
+  uint8_t delayTime = 100;
   Serial.println("Starting self test...");
   for (uint8_t i = 0; i < numGrounds; i++)
   {
     digitalWrite(groundPins[i], 0x0);
+    delay(delayTime);
 
     for (uint8_t i = 0; i < numLeds; i++)
     {
       digitalWrite(ledPins[i], 0x1);
       delay(delayTime);
       digitalWrite(ledPins[i], 0x0);
+      delay(delayTime);
     }
 
     digitalWrite(groundPins[i], 0x1);
   }
   Serial.println("Finished self test...");
-  delay(delayTime);
-}
+    delay(delayTime);
+  }
 
 void Rotate(int delayTime)
 {
@@ -65,10 +68,10 @@ void Rotate(int delayTime)
       delay(delayTime);
       digitalWrite(ledPins[0], 0x0);
       digitalWrite(groundPins[i], 0x1);
-    }
+}
 
     for (uint8_t g = 0; g < numGrounds; g++)
-    {
+{
       digitalWrite(groundPins[g], 0x0);
       digitalWrite(ledPins[l], 0x1);
       delay(delayTime);
