@@ -26,13 +26,12 @@ void setup()
   for (uint8_t i = 0; i < numLeds; i++)
     pinMode(ledPins[i], 0x1);
 
-  SelfTest(50);
+  SelfTest(100);
 }
 
 void loop()
 {
-  SelfTest(100);
-  SelfTest(50);
+  SelfTest(5);
 }
 
 void SelfTest(int delayTime)
@@ -53,7 +52,6 @@ void SelfTest(int delayTime)
     }
 
     digitalWrite(groundPins[i], 0x1);
-    delay(delayTime);
   }
 }
 
