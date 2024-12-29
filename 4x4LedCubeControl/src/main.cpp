@@ -11,7 +11,7 @@ const uint8_t dataPin = 5;
 const uint8_t ledPin1 = 0;
 const uint8_t layerGround1 = 16;
 
-// put your setup code here, to run once:
+// the setup function runs once when you press reset or power the board
 void setup() {
   Serial.begin(9600);
   pinMode(clockPin, OUTPUT);
@@ -19,7 +19,7 @@ void setup() {
   pinMode(dataPin, OUTPUT);  
 }
 
-// put your main code here, to run repeatedly:
+// the loop function runs over and over again forever
 void loop() {
   int32_t i = pow(2, ledPin1) + pow(2, layerGround1);
   Serial.println("Number is:" + String(i));
