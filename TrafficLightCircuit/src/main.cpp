@@ -6,12 +6,12 @@
 /// The walk light sequence is activated when the pedestrian walk button is pressed
 
 // Pin assignments
-const uint8_t carGreenLightPin = 2; // Green light is connected to pin 2
-const uint8_t carYellowLightPin = 3; // Yellow light is connected to pin 3
-const uint8_t carRedLightPin = 4; // Red light is connected to pin 4
-const uint8_t walkGreenLightPin = 5; // Green walk light is connected to pin 5
-const uint8_t walkRedLightPin = 6; // Red walk light is connected to pin 6
-const uint8_t buttonPin = 7; // Interrupt pin for the walk button
+const uint8_t carGreenLightPin = 3; // Green light is connected to pin 2
+const uint8_t carYellowLightPin = 4; // Yellow light is connected to pin 3
+const uint8_t carRedLightPin = 5; // Red light is connected to pin 4
+const uint8_t walkGreenLightPin = 6; // Green walk light is connected to pin 5
+const uint8_t walkRedLightPin = 7; // Red walk light is connected to pin 6
+const uint8_t buttonPin = 2; // Interrupt pin for the walk button
 
 // Timing constants
 const int carRedLightDuration = 5000; // 5 seconds
@@ -48,7 +48,7 @@ void setup() {
   pinMode(buttonPin, INPUT_PULLUP);
   
   // Attach interrupt to the button pin
-  attachInterrupt(digitalPinToInterrupt(buttonPin), handleWalkButtonPress, FALLING);
+  attachInterrupt(digitalPinToInterrupt(buttonPin), handleWalkButtonPress, CHANGE);
 }
 
 // the loop function runs over and over again forever
@@ -62,7 +62,7 @@ void loop() {
   }
 }
 
-// Function to handle the normal traffic light sequence
+/// @brief This function handles the normal traffic light sequence
 void normalTrafficLightSequence() {
   // Switch the red light on
   switchOnTrafficLight(HIGH, LOW, LOW);
@@ -85,19 +85,23 @@ void normalTrafficLightSequence() {
   delay(carYellowLightDuration);
 }
 
-// Function to handle the walk light sequence
+/// @brief This function handles the walk light sequence
 void walkLightSequence() {
   // Switch the green walk light on
-  switchOnWalkLight(HIGH, LOW);
+  switchOnWalkLight(LOW, HIGH);
   // Wait for the walk light duration to pass
   delay(walkLightDuration);
   // Switch the red walk light on
-  switchOnWalkLight(LOW, HIGH);
+  switchOnWalkLight(HIGH, LOW);
   // Reset the walk button pressed flag
   walkButtonPressed = false;
 }
 
-// Function to switch on the traffic lights
+
+/// @brief This function switches on the traffic light
+/// @param red The red light state
+/// @param yellow The yellow light state
+/// @param green The green light state
 void switchOnTrafficLight(uint8_t red, uint8_t yellow, uint8_t green) {
   Serial.println("Switching on traffic light");
   digitalWrite(carRedLightPin, red); // Switch the red light on or off
@@ -107,17 +111,19 @@ void switchOnTrafficLight(uint8_t red, uint8_t yellow, uint8_t green) {
   digitalWrite(walkRedLightPin, HIGH); // Switch the red walk light off
 }
 
-// Function to switch on the walk lights
-void switchOnWalkLight(uint8_t greenWalk, uint8_t redWalk) {
+/// @brief This function switches on the walk light
+/// @param red The red walk light state
+/// @param green The green walk light state
+void switchOnWalkLight(uint8_t red, uint8_t green) {
   Serial.println("Switching on walk light");
   digitalWrite(carRedLightPin, LOW); // Switch the red light off
   digitalWrite(carYellowLightPin, LOW); //Switch the yellow light off
   digitalWrite(carGreenLightPin, LOW); // Switch the green light off
-  digitalWrite(walkGreenLightPin, greenWalk); // Switch the green walk light on or off
-  digitalWrite(walkRedLightPin, redWalk); // Switch the red walk light on or off
+  digitalWrite(walkRedLightPin, red); // Switch the red walk light on or off
+  digitalWrite(walkGreenLightPin, green); // Switch the green walk light on or off
 }
 
-// Function to handle the walk button press
+/// @brief This function handles the walk button press
 void handleWalkButtonPress() {
   Serial.println("Walk button pressed");
   walkButtonPressed = true; // Set the walk button pressed flag
