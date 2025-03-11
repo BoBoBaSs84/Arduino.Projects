@@ -37,7 +37,7 @@ void loop()
 {
   // Generate a random number and a random float
   randNumber = random(0, 100);
-  randFloat = (float)randNumber / 100.0;
+  randFloat = (float)random(0, 100) / 100.0;
 
   writeFirstLine(lcd, "Number: " + String(randNumber));
   writeSecondLine(lcd, "Float: " + String(randFloat, 2));
